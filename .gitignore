@@ -2,3 +2,4 @@
 dev.db
 local_settings.py
 *.swp
+.Python
