@@ -21,12 +21,12 @@ urlpatterns = patterns('',
     (r'^accounts/', include('userena.urls')),
 
     # Application process
-    (r'^attend/save', 'fd.profiles.views.attend_save'),
-    (r'^attend/thanks', 'fd.profiles.views.attend_thanks'),
-    (r'^attend', 'fd.profiles.views.attend'),
+    (r'^attend/save', 'profiles.views.attend_save'),
+    (r'^attend/thanks', 'profiles.views.attend_thanks'),
+    (r'^attend', 'profiles.views.attend'),
 
     # List upcoming events
-    (r'^upcoming', 'fd.profiles.views.events'),
+    (r'^upcoming', 'profiles.views.events'),
 
     # social auth for linkedin hookup
     url(r'', include('social_auth.urls')),
@@ -39,7 +39,7 @@ urlpatterns = patterns('',
     (r'^' + settings.MEDIA_URL.lstrip('/'), include('appmedia.urls')),
 
     # E-mail forms for the admin
-    (r'^email_form', 'fd.profiles.views.email_form'),
+    (r'^email_form', 'profiles.views.email_form'),
 
     # Zinnia (blog)
     url(r'^blog/', include('zinnia.urls')),
