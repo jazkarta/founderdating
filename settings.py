@@ -238,4 +238,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 ENVIRONMENT = os.environ.get("FD_ENVIRONMENT", "dev")
 
 # Specify all your settings in a file named local_settings
-from local_settings import *
+try:
+    from local_settings import *
+except ImportError:
+    pass
