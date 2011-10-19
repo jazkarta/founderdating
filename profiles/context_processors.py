@@ -1,4 +1,4 @@
-from fd.profiles.models import Interest, Event, EventLocation, Skillset
+from profiles.models import Interest, Event, EventLocation, Skillset
 import settings
 import datetime
 
