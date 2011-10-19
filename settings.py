@@ -2,7 +2,7 @@
 import os
 
 ROOT_PATH = os.path.dirname(__file__)
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -103,10 +103,10 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.media.PlaceholderMediaMiddleware',
+#    'cms.middleware.media.PlaceholderMediaMiddleware',
 )
 
-ROOT_URLCONF = 'fd.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     os.path.join(ROOT_PATH, "templates"),
@@ -125,7 +125,7 @@ INSTALLED_APPS = (
     'userena',
     'guardian',
     'easy_thumbnails', # temporarily coment this out when running migrate first time
-    'fd.profiles',
+    'profiles',
     'social_auth',
 
     # django-cms
@@ -179,7 +179,7 @@ ANONYMOUS_USER_ID = -1
 
 # django-userena
 AUTHENTICATION_BACKENDS = (
-    'fd.profiles.AuthBackends.LegacyBackend',
+    'profiles.AuthBackends.LegacyBackend',
     'social_auth.backends.contrib.linkedin.LinkedinBackend', # social_auth
     'userena.backends.UserenaAuthenticationBackend',
     'guardian.backends.ObjectPermissionBackend',
