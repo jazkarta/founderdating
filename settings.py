@@ -103,7 +103,7 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-#    'cms.middleware.media.PlaceholderMediaMiddleware',
+    'cms.middleware.media.PlaceholderMediaMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
