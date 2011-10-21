@@ -205,6 +205,12 @@ LINKEDIN_EXTRA_FIELD_SELECTORS = [
     'connections',
     'public-profile-url',
     ]
+LINKEDIN_EXTRA_DATA = [
+    ('industry', 'industry'),
+    ('summary', 'summary'),
+    ('picture-url', 'picture-url'),
+    ('public-profile-url', 'public-profile-url'),
+    ]
 
 #django cms
 CMS_TEMPLATES = (

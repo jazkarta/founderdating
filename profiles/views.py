@@ -5,13 +5,19 @@ from django.views.decorators.http import require_POST
 from profiles.models import Applicant, EmailTemplate, Event, FdProfile
 import json
 
+
 def attend(request):
+    context_instance = RequestContext(request)
+    extra_data = context_instance['user'].social_auth.all()[0].extra_data
     c = {
-        "three": [1,2,3], 
+        "three": [1, 2, 3],
         "idea_status_choices": dict(FdProfile.IDEA_STATUS_CHOICES),
         "start_choices": dict(FdProfile.START_CHOICES),
+        "linkedin_data": extra_data,
+        "linkedin_url": extra_data['public-profile-url']
     }
-    return render_to_response('attend.html', c, context_instance=RequestContext(request))
+    return render_to_response('attend.html', c,
+                              context_instance=context_instance)
 
 @require_POST
 def attend_save(request):
