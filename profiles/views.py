@@ -19,9 +19,10 @@ def attend(request):
     return render_to_response('attend.html', c,
                               context_instance=context_instance)
 
+
 @require_POST
 def attend_save(request):
-    e = Event.objects.filter(pk = request.POST.get("event_id", -1))
+    e = Event.objects.filter(pk=request.POST.get("event_id", -1))
     if len(e) < 1:
         raise Exception("Invalid Event")
 
@@ -29,45 +30,55 @@ def attend_save(request):
     if request.POST.get("interests_more"):
         for i in request.POST.get("interests_more").split(","):
             interests.append(i)
-   
+
     recommend = []
     recommend_names = request.POST.getlist("recommend_name")
     recommend_emails = request.POST.getlist("recommend_email")
-    for i in [0,1,2]:
-        recommend.append({"name": recommend_names[i], "email": recommend_emails[i]})
-    
+    for i in [0, 1, 2]:
+        recommend.append({"name": recommend_names[i],
+                          "email": recommend_emails[i]})
+
     applicant = Applicant(
         name=request.POST.get("name"),
         email=request.POST.get("email"),
         event=e[0],
-        bring_skillsets_json = json.dumps(request.POST.getlist("bring_skillsets")),
-        past_experience_blurb = request.POST.get("past_experience_blurb"),
-        linkedin_url = request.POST.get("linkedin_url"),
-        bring_blurb = request.POST.get("bring_blurb"),
-        building_blurb = request.POST.get("building_blurb"),
-        interests_json = json.dumps(interests),
-        can_start = request.POST.get("can_start"),
-        idea_status = request.POST.get("idea_status"),
-        need_skillsets_json = json.dumps(request.POST.getlist("need_skillsets")),
-        recommend_json = json.dumps(recommend)
+        bring_skillsets_json=json.dumps(
+            request.POST.getlist("bring_skillsets")),
+        past_experience_blurb=request.POST.get("past_experience_blurb"),
+        linkedin_url=request.POST.get("linkedin_url"),
+        bring_blurb=request.POST.get("bring_blurb"),
+        building_blurb=request.POST.get("building_blurb"),
+        interests_json=json.dumps(interests),
+        can_start=request.POST.get("can_start"),
+        idea_status=request.POST.get("idea_status"),
+        need_skillsets_json=json.dumps(
+            request.POST.getlist("need_skillsets")),
+        recommend_json=json.dumps(recommend)
     )
     applicant.save()
-    
+
     return redirect("/attend/thanks")
+
 
 def attend_thanks(request):
     c = {}
-    return render_to_response('attend_thanks.html', c, context_instance=RequestContext(request))
+    return render_to_response('attend_thanks.html', c,
+                              context_instance=RequestContext(request))
+
 
 def events(request):
     c = {}
-    return render_to_response('events.html', c, context_instance=RequestContext(request))
+    return render_to_response('events.html', c,
+                              context_instance=RequestContext(request))
+
 
 @login_required
 def email_form(request):
     c = {}
-    email_templates = EmailTemplate.objects.filter(name = request.GET.get("email_template"))
+    email_templates = EmailTemplate.objects.filter(
+        name=request.GET.get("email_template"))
     if len(email_templates) > 0:
         c.update({"email_template": email_templates[0]})
-        
-    return render_to_response('email_form.html', c, context_instance=RequestContext(request))
+
+    return render_to_response('email_form.html', c,
+                              context_instance=RequestContext(request))
