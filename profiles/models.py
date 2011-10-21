@@ -131,20 +131,3 @@ class EmailTemplate(models.Model):
 
     def __unicode__(self):
         return self.name
-
-
-### END of traditional models definition. Should this be moved to __init__.py?
-# Listen for new accounts/updates via social auth and update the FdProfile
-from social_auth.signals import pre_update
-from social_auth.backends.contrib.linkedin import LinkedinBackend
-
-def linkedin_extra_values(sender, user, response, details, **kwargs):
-    """
-    print "response=", response
-    print "details=", details
-    response= {'last-name': 'Sullivan', 'headline': 'VP of Technology at Krux Digital', 'first-name': 'Nick', 'access_token': 'oauth_token_secret=xxxxx', 'site-standard-profile-request': {'url': 'http://www.linkedin.com/profile?viewProfile=&key=732523&authToken=u2nf&authType=name&trk=api*a101448*s101448*'}, 'id': '732523'}
-details= {'first_name': 'Nick', 'last_name': 'Sullivan', 'email': ''}
-    """
-    return True
-
-pre_update.connect(linkedin_extra_values, sender=LinkedinBackend)

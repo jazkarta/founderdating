@@ -197,6 +197,14 @@ LOGIN_ERROR_URL = '/profiles/signin/?login_error'
 # You should override in settins_local
 LINKEDIN_CONSUMER_KEY    = 'xxxxxxxxxx'
 LINKEDIN_CONSUMER_SECRET = 'xxxxxxxx'
+LINKEDIN_EXTRA_FIELD_SELECTORS = [
+    'industry',
+    'summary',
+    'picture-url',
+    'location',
+    'connections',
+    'public-profile-url',
+    ]
 
 #django cms
 CMS_TEMPLATES = (
