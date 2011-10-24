@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.template import Template, Context, Library
 from django.core.mail import EmailMessage
-from profiles.models import Applicant, EmailTemplate, Event, EventLocation, Interest, Skillset
+from profiles.models import Applicant, EmailTemplate, Event, EventLocation, Interest, Skillset, LinkedinProfile
 import json
 from profiles.csv_export import CsvExport
 from django.contrib.admin.views.main import ChangeList
@@ -173,3 +173,8 @@ admin.site.register(Interest, InterestAdmin)
 class EmailTemplateAdmin(admin.ModelAdmin):
     search_fields = ['name', 'subject', 'message']
 admin.site.register(EmailTemplate, EmailTemplateAdmin)
+
+
+class LinkedinProfileAdmin(admin.ModelAdmin):
+    search_fields = []
+admin.site.register(LinkedinProfile, LinkedinProfileAdmin)
