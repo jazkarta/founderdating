@@ -1,1 +1,1 @@
-from fd.profiles import social
+from profiles import social
