@@ -28,7 +28,19 @@ def attend(request):
     positions = extra_data.get('positions', {})
     experience = u''
     for position in positions.get('position', []):
-        experience += u'%s, %s\n' % (position['title'], position['company']['name'])
+        end = position.get('end-date', {})
+        endyear = end.get('year', u'now')
+        experience += u'%s to %s, %s, %s\n' % (position['start-date']['year'],
+                                               endyear,
+                                               position['title'],
+                                               position['company']['name'])
+    education = u''
+    for edu in extra_data.get('educations', {}).values():
+        for v in edu.values():
+            if isinstance(v, dict):
+                v = v.values()[0]
+            education += v + u', '
+        education += u'\n'
 
     c = {
         "three": [1, 2, 3],
@@ -39,6 +51,7 @@ def attend(request):
         'location': location,
         'twitter': twitter,
         'experience': experience,
+        'education': education,
     }
     return render_to_response('attend.html', c,
                               context_instance=context_instance)

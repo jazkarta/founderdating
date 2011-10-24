@@ -206,6 +206,7 @@ LINKEDIN_EXTRA_FIELD_SELECTORS = [
     'public-profile-url',
     'positions',
     'twitter-accounts',
+    'educations',
     ]
 LINKEDIN_EXTRA_DATA = [
     ('industry', 'industry'),
@@ -215,6 +216,7 @@ LINKEDIN_EXTRA_DATA = [
     ('location', 'location'),
     ('positions', 'positions'),
     ('twitter-accounts', 'twitter-accounts'),
+    ('educations', 'educations'),
     ]
 
 #django cms
