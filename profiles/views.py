@@ -108,7 +108,11 @@ def events(request):
     return render_to_response('events.html', c,
                               context_instance=RequestContext(request))
 
-
+def event_detail(request, event_id):
+    event = Event.objects.filter(id=event_id)[0]
+    return render_to_response('event.html', {'event': event, },
+                              RequestContext(request))
+    
 @login_required
 def email_form(request):
     c = {}
