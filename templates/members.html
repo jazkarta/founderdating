@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+
+{% block fd_content%}
+
+<form method="POST">
+  <div class="member-search">
+    <fieldset class="keyword">
+      <h1>Search by Keyword</h1>
+      <div class="fields">
+        <input type="text" name="s" value="">
+      </div>
+      <div class="actions">
+        <input type="submit" value="Search">
+      </div>
+    </fieldset>
+    <fieldset class="filter">
+      <h1>Filter by</h1>
+      <div class="fields">
+        <select>
+          <option>Event</option>
+        </select>
+      </div>
+      <div class="actions">
+        <input type="submit" value="Search">
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="member-listing">
+    <div class="member-info">
+      <div class="img-wrapper">
+        <img src="">
+      </div>
+      <h1 class="name">Example Name which is really long</h1>
+      whatever
+    </div>
+    <div class="member-info">
+      <div class="img-wrapper">
+        <img src="">
+      </div>
+      <h1 class="name">Example Name which is really long</h1>
+      whatever
+    </div>
+  </div>
+</form>
+
+{% endblock fd_content%}

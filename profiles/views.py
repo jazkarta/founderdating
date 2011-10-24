@@ -119,3 +119,9 @@ def email_form(request):
 
     return render_to_response('email_form.html', c,
                               context_instance=RequestContext(request))
+
+
+def members(request):
+    c = {}
+    return render_to_response('members.html', c,
+                              context_instance=RequestContext(request))

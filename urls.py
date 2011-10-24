@@ -41,6 +41,9 @@ urlpatterns = patterns('',
     # E-mail forms for the admin
     (r'^email_form', 'profiles.views.email_form'),
 
+    # E-mail forms for the admin
+    (r'^members', 'profiles.views.members'),
+
     # Zinnia (blog)
     url(r'^blog/', include('zinnia.urls')),
     url(r'^comments/', include('django.contrib.comments.urls')),

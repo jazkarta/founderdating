@@ -741,3 +741,56 @@ form fieldset input[type=text], input[type=password]{
   font-size: .75em;
   color: #919191;
 }
+
+/* Member Listing
+------------------------- */
+
+
+.member-search {
+    display: inline-block;
+    width: 10em;
+    background-color: #ddd;
+    padding: 1em;
+}
+
+.member-search h1 {
+    font-size: 1.4em !important;
+    font-weight: bold;
+}
+
+.member-search fieldset {
+    border: 0;
+}
+
+.member-search fieldset.keyword {
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    border-bottom: 2px dotted #999;
+}
+
+.member-search input[type=text] {
+    width: 9em !important;
+}
+.member-listing {
+    display: inline-block;
+    border: 1px green dotted;
+    vertical-align: top;
+}
+.member-listing .member-info {
+    width: 160px;
+    overflow: auto;
+    display: inline-block;
+}
+
+.member-listing .img-wrapper {
+    height: 140px;
+    width: 140px;
+    border: 1px solid #ddd;
+    margin: auto;
+}
+
+.member-listing h1 {
+    font-size: 1.2em !important;
+}
+
+
