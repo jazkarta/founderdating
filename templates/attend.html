@@ -12,6 +12,12 @@
     
     <h2><label for="email">Email address</label></h2>
     <p><input type="text" id="email" name="email" class="text" value="{{user.email}}" /></p>
+
+    <h2><label for="location">Location</label></h2>
+    <p><input type="text" id="location" name="location" class="text" value="{{location}}" /></p>
+
+    <h2><label for="twitter">Twitter</label></h2>
+    <p><input type="text" id="twitter" name="twitter" class="text" value="{{twitter}}" /></p>
     
     <h2><label for="event">Event</label></h2>
     <ul>
@@ -32,7 +38,7 @@
     </ul>
     
     <h2><label for="past_experience">Please tell us about your previous experience</label></h2>
-    <p><textarea id="past_experience" name="past_experience_blurb" cols="40" rows="8"></textarea></p>
+    <p><textarea id="past_experience" name="past_experience_blurb" cols="80" rows="8">{{experience}}</textarea></p>
     
     <h2><label for="linkedin">Linkedin Profile link</label></h2>
     <p>

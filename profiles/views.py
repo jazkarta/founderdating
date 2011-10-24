@@ -15,12 +15,30 @@ def attend(request):
     else:
         extra_data = {}
 
+    twitter = u''
+    info = extra_data.get('twitter-accounts', {})
+    if info:
+        for info in info.get('twitter-account', []):
+            twitter = info['provider-account-name']
+            break
+
+    location = extra_data.get('location', {})
+    location = location['name']
+
+    positions = extra_data.get('positions', {})
+    experience = u''
+    for position in positions.get('position', []):
+        experience += u'%s, %s\n' % (position['title'], position['company']['name'])
+
     c = {
         "three": [1, 2, 3],
         "idea_status_choices": dict(FdProfile.IDEA_STATUS_CHOICES),
         "start_choices": dict(FdProfile.START_CHOICES),
         "linkedin_data": extra_data,
-        "linkedin_url": extra_data.get('public-profile-url', ''),
+        "linkedin_url": extra_data.get('public-profile-url', u''),
+        'location': location,
+        'twitter': twitter,
+        'experience': experience,
     }
     return render_to_response('attend.html', c,
                               context_instance=context_instance)
