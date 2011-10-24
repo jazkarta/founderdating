@@ -41,6 +41,10 @@ class FdProfile(UserenaBaseProfile):
     event = models.ForeignKey('Event', null=True, blank=True)
     comments = models.TextField(blank=True, null=True)
 
+    def __unicode__(self):
+        return u'<FdProfile linked_url=%s>' % self.linkedin_url
+
+
 class Applicant(models.Model):
     GROUP_CHOICES = []
     i = 0
