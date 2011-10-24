@@ -8,13 +8,19 @@ import json
 
 def attend(request):
     context_instance = RequestContext(request)
-    extra_data = context_instance['user'].social_auth.all()[0].extra_data
+    user = context_instance['user']
+
+    if hasattr(user, 'social_auth'):
+        extra_data = context_instance['user'].social_auth.all()[0].extra_data
+    else:
+        extra_data = {}
+
     c = {
         "three": [1, 2, 3],
         "idea_status_choices": dict(FdProfile.IDEA_STATUS_CHOICES),
         "start_choices": dict(FdProfile.START_CHOICES),
         "linkedin_data": extra_data,
-        "linkedin_url": extra_data['public-profile-url']
+        "linkedin_url": extra_data.get('public-profile-url', ''),
     }
     return render_to_response('attend.html', c,
                               context_instance=context_instance)
