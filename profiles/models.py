@@ -55,11 +55,7 @@ class FdProfile(UserenaBaseProfile):
 
 
 class Applicant(models.Model):
-    GROUP_CHOICES = []
-    i = 0
-    while i < 10:
-        i += 1
-        GROUP_CHOICES.append((i, i))
+    GROUP_CHOICES = [(i, i) for i in range(1, 11)]
 
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
