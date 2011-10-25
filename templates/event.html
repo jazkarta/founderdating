@@ -1,0 +1,10 @@
+{% extends 'base.html'%}
+
+
+{% block fd_content%}
+
+<h1>{{ event.event_location }}</h1>
+<h2>{{ event.event_date}}</h2>
+<p>{{ event.description }}</p>
+<strong>Deadline:</strong>&nbsp;Apply by {{ event.apply_deadline }}
+{% endblock fd_content%}

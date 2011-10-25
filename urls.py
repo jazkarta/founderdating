@@ -27,7 +27,8 @@ urlpatterns = patterns('',
 
     # List upcoming events
     (r'^upcoming', 'profiles.views.events'),
-
+    (r'^event/(?P<event_id>\d+)/$', 'profiles.views.event_detail'),
+    
     # social auth for linkedin hookup
     url(r'', include('social_auth.urls')),
 

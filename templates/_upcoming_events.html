@@ -6,6 +6,7 @@
     <h2>Apply by {{e.apply_deadline }}</h2>
     <p>{{e.description}}</p>
     <input type="button" value="Attend This Event" onclick="window.location='/attend?event={{e.id}}'"/>
+    <input type="button" value="View this Event" onclick="window.location='/event/{{e.id}}/'"/>
   </div>
 </div><!-- .event -->
 {%endfor%}

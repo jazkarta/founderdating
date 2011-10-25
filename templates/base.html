@@ -16,26 +16,27 @@
 <div id="fd_header">
   <div class="gasket">
     <div class="account">
-	<p>
-	{% if user.is_superuser %}
-	  <a href="/internal_admin/"><img src="/static/img/superman_icon.png"></a>
-	{% endif %}
-	{% if user.is_authenticated %}
+    <p>
+    {% if user.is_superuser %}
+      <a href="/internal_admin/"><img src="/static/img/superman_icon.png"></a>
+    {% endif %}
+    {% if user.is_authenticated %}
               Signed in as 
-		{%if user.first_name %}
-		  {{user.first_name}} {{user.last_name}}
-		{% else %}
-		  {% if user.email %}
-		    {{user.email}}
-		  {% else %}
-		    {{user.username}}
-		  {% endif %}
-		{% endif %}
-		&nbsp; &nbsp; <input type="button" onclick='window.location.href="/profiles/signout/"' class="small_button" value="Sign out" />
-	{% else %}
+        {%if user.first_name %}
+          {{user.first_name}} {{user.last_name}}
+        {% else %}
+          {% if user.email %}
+            {{user.email}}
+          {% else %}
+            {{user.username}}
+          {% endif %}
+        {% endif %}
+        &nbsp; &nbsp; <input type="button" onclick='window.location.href="{% url userena_profile_edit user.username %}"' class="small_button" value="Edit profile" />
+        <input type="button" onclick='window.location.href="{% url userena_signout %}"' class="small_button" value="Sign out" />
+    {% else %}
              You are not signed in &nbsp; &nbsp; <input type="button" onclick='window.location.href="/profiles/signin/"' class="small_button" value="Sign in" />
-	{% endif %}
-	</p>
+    {% endif %}
+    </p>
     </div><!-- .account -->
 
     <h1><a href="/">FounderDating</a></h1>
@@ -43,11 +44,11 @@
     <ul class="tabs first_tab_active">
               <li class="active"><a href="/">Home</a></li>
               <li><a href="/upcoming">Upcoming</a>
-		<ul class="sub">
-		  {% for loc in event_locations %}
-		  <li><a href="/upcoming/{{loc.id}}">{{loc.display}}</a></li>
-		  {% endfor %}
-		</ul>
+        <ul class="sub">
+          {% for loc in event_locations %}
+          <li><a href="/upcoming/{{loc.id}}">{{loc.display}}</a></li>
+          {% endfor %}
+        </ul>
               <li><a href="/attend">Attend</a></li>
 
               <li><a href="/about">About</a></li>
@@ -69,14 +70,14 @@
         {% block content_title %}{% endblock %}
       </div>
       <div class="content">
-	 {% placeholder base_content %}
-	 {% block fd_content%}{% endblock fd_content%}
+     {% placeholder base_content %}
+     {% block fd_content%}{% endblock fd_content%}
       </div>
     {% endblock %}
  </div><!-- /#content -->
   
   <div id="sidebar">
-	 {% placeholder side_bar %}
+     {% placeholder side_bar %}
   </div><!-- /#sidebar -->
   
 </div><!-- /#main.gasket -->
