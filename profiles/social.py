@@ -20,10 +20,10 @@ def linkedin_extra_values(sender, user, response, details, **kwargs):
     fd_profile = FdProfile(linkedin_url=linkedin_url)
     ll_profile = LinkedinProfile(
         fd_profile=fd_profile,
-        profile_raw=response['summary'],
-        profile_picture=response['picture-url'],
-        profile_location=response['location'],
-        profile_industry=response['industry'],
+        profile_raw=response.get('summary', u''),
+        profile_picture=response.get('picture-url', u''),
+        profile_location=response.get('location', u''),
+        profile_industry=response.get('industry', u''),
         #connections_raw=response['connections'],
         )
     fd_profile.save()
