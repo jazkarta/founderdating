@@ -9,7 +9,7 @@ def linkedin_extra_values(sender, user, response, details, **kwargs):
     """
     """
 
-    linkedin_url = response['public-profile-url']
+    linkedin_url = response.get('public-profile-url', u'')
 
     try:
         fd_profile = FdProfile.objects.get(linkedin_url=linkedin_url)
