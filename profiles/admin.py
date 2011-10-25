@@ -123,9 +123,9 @@ class ApplicantAdmin(admin.ModelAdmin):
     email_applicant.short_description = "Email selected applicants"
 
 
-    list_display = ('name', 'event_status', 'founder_type', 'event_group', 'linkedin_link', 'references', 'comments')
+    list_display = ('name', 'event_status', 'idea_status', 'founder_type', 'event_group', 'linkedin_link', 'references', 'comments')
     list_filter = ['event', 'event_status', 'founder_type', 'event_group', 'can_start', 'idea_status']
-    list_editable = ('founder_type', 'event_group', 'event_status', 'comments')
+    list_editable = ('founder_type', 'event_group', 'event_status', 'idea_status', 'comments')
     date_hierarchy = "created_at"
     ordering = ["-created_at"]
     save_on_top = True
