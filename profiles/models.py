@@ -29,9 +29,9 @@ class FdProfile(UserenaBaseProfile):
         ('business', 'Biz')
     )
 
-    user = models.OneToOneField(User,
-                                verbose_name='user',
-                                related_name='fdprofile_user')
+    #user = models.OneToOneField(User,
+    #                            verbose_name='user',
+    #                            related_name='fdprofile_user')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True, auto_now=True)
