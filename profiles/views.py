@@ -4,7 +4,6 @@ from django.template import RequestContext
 from django.views.decorators.http import require_POST
 from profiles.models import Applicant, EmailTemplate, Event, FdProfile
 import json
-from collections import OrderedDict
 
 
 def attend(request):
@@ -156,9 +155,9 @@ def members(request):
     paginator = Paginator(FdProfile.objects.filter(q), 20)
     page = paginator.page(int(request.GET.get('p', 1)))
 
-    profiles = OrderedDict()
+    profiles = []
     for profile in page.object_list:
-        profiles[profile.id] = member_dict(profile)
+        profiles.append(member_dict(profile))
 
     c = {'profiles': profiles}
     return render_to_response('members.html', c,
