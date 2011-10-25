@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.views.decorators.http import require_POST
 from profiles.models import Applicant, EmailTemplate, Event, FdProfile
 import json
+from collections import OrderedDict
 
 
 def attend(request):
@@ -121,7 +122,40 @@ def email_form(request):
                               context_instance=RequestContext(request))
 
 
+member_search_fields = []
+
+
+def member_dict(profile):
+    member = {
+        'image_url': '',
+        'name': 'N/A',
+        }
+    return member
+
+
+from django.db.models import Q
+from django.core.paginator import Paginator
+
+
 def members(request):
-    c = {}
+    search = request.POST.get('s', '')
+
+    members = OrderedDict()
+    if search:
+        for fields in member_search_fields:
+            q = Q()
+            for field in fields:
+                kwargs = {field: search}
+                q = q | Q(**kwargs)
+    else:
+        q = Q()
+
+    paginator = Paginator(FdProfile.objects.filter(q), 20)
+    page = paginator.page(int(request.GET.get('p', 1)))
+
+    for profile in page.object_list:
+        members[profile.id] = member_dict(profile)
+
+    c = {'members': members.values()}
     return render_to_response('members.html', c,
                               context_instance=RequestContext(request))

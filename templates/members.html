@@ -2,6 +2,8 @@
 
 {% block fd_content%}
 
+<div id="fd_members">
+
 <form method="POST">
   <div class="member-search">
     <fieldset class="keyword">
@@ -10,7 +12,7 @@
         <input type="text" name="s" value="">
       </div>
       <div class="actions">
-        <input type="submit" value="Search">
+        <input type="submit" value="Go">
       </div>
     </fieldset>
     <fieldset class="filter">
@@ -21,27 +23,23 @@
         </select>
       </div>
       <div class="actions">
-        <input type="submit" value="Search">
+        <input type="submit" value="Go">
       </div>
     </fieldset>
   </div>
 
   <div class="member-listing">
+    {% for member in members %}
     <div class="member-info">
       <div class="img-wrapper">
         <img src="">
       </div>
-      <h1 class="name">Example Name which is really long</h1>
+      <h1 class="name">{{ member.name }}</h1>
       whatever
     </div>
-    <div class="member-info">
-      <div class="img-wrapper">
-        <img src="">
-      </div>
-      <h1 class="name">Example Name which is really long</h1>
-      whatever
-    </div>
+    {% endfor %}
   </div>
 </form>
+</div>
 
 {% endblock fd_content%}

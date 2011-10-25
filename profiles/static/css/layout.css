@@ -748,14 +748,19 @@ form fieldset input[type=text], input[type=password]{
 
 .member-search {
     display: inline-block;
-    width: 10em;
+    width: 25%;
     background-color: #ddd;
     padding: 1em;
 }
 
-.member-search h1 {
-    font-size: 1.4em !important;
+#fd_members .member-search h1 {
+    font-size: 1.3em;
     font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+    color: #666;
+    border-bottom: 2px dotted #999;
+    padding-bottom: 0.5em;
+
 }
 
 .member-search fieldset {
@@ -765,16 +770,16 @@ form fieldset input[type=text], input[type=password]{
 .member-search fieldset.keyword {
     margin-bottom: 1em;
     padding-bottom: 1em;
-    border-bottom: 2px dotted #999;
 }
 
-.member-search input[type=text] {
-    width: 9em !important;
+#fd_members .member-search input[type=text] {
+    width: 9em;
 }
 .member-listing {
     display: inline-block;
     border: 1px green dotted;
     vertical-align: top;
+    width: 70%;
 }
 .member-listing .member-info {
     width: 160px;
@@ -789,8 +794,7 @@ form fieldset input[type=text], input[type=password]{
     margin: auto;
 }
 
-.member-listing h1 {
-    font-size: 1.2em !important;
+#fd_members .member-listing h1 {
+	font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
 }
-
-
