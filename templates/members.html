@@ -29,13 +29,17 @@
   </div>
 
   <div class="member-listing">
-    {% for member in members %}
+    {% for profile in profiles %}
     <div class="member-info">
       <div class="img-wrapper">
-        <img src="">
+{% if profile.portrait_url %}
+        <img src="{{profile.portrait_url}}">
+{% else %}
+        <div class="missing-portrait"></div>
+{% endif %}
       </div>
-      <h1 class="name">{{ member.name }}</h1>
-      whatever
+      <h1 class="name">-{{ profile.name }}-</h1>
+      <p class="bio">bio text</p>
     </div>
     {% endfor %}
   </div>

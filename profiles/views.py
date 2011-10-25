@@ -127,8 +127,8 @@ member_search_fields = []
 
 def member_dict(profile):
     member = {
-        'image_url': '',
-        'name': 'N/A',
+        'portrait_url': '',
+        'name': profile.user.first_name + u' ' + profile.user.last_name,
         }
     return member
 
@@ -140,7 +140,6 @@ from django.core.paginator import Paginator
 def members(request):
     search = request.POST.get('s', '')
 
-    members = OrderedDict()
     if search:
         for fields in member_search_fields:
             q = Q()
@@ -153,9 +152,10 @@ def members(request):
     paginator = Paginator(FdProfile.objects.filter(q), 20)
     page = paginator.page(int(request.GET.get('p', 1)))
 
+    profiles = OrderedDict()
     for profile in page.object_list:
-        members[profile.id] = member_dict(profile)
+        profiles[profile.id] = member_dict(profile)
 
-    c = {'members': members.values()}
+    c = {'profiles': profiles}
     return render_to_response('members.html', c,
                               context_instance=RequestContext(request))

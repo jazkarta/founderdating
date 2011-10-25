@@ -794,6 +794,11 @@ form fieldset input[type=text], input[type=password]{
     margin: auto;
 }
 
+.member-listing .missing-portrait:after {
+    content: "missing portrait";
+    color: #aaa;
+}
+
 #fd_members .member-listing h1 {
 	font-family: Arial, Helvetica, sans-serif;
     font-size: 1.2em;

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from userena.models import UserenaBaseProfile
 
@@ -27,6 +28,10 @@ class FdProfile(UserenaBaseProfile):
         ('technical', 'Tech'),
         ('business', 'Biz')
     )
+
+    user = models.OneToOneField(User,
+                                verbose_name='user',
+                                related_name='fdprofile_user')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True, auto_now=True)
