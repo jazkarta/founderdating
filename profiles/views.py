@@ -27,20 +27,32 @@ def attend(request):
 
     positions = extra_data.get('positions', {})
     experience = u''
-    for position in positions.get('position', []):
-        end = position.get('end-date', {})
-        endyear = end.get('year', u'now')
-        experience += u'%s to %s, %s, %s\n' % (position['start-date']['year'],
-                                               endyear,
-                                               position['title'],
-                                               position['company']['name'])
+    pos = positions.get('position', [])
+    if isinstance(pos, dict):
+        pos = [pos]
+
+    for position in pos:
+        if 'start-date' not in position:
+            end = u'current'
+            experience += u'current, %s, %s\n' % (position['title'],
+                                                   position['company']['name'])
+        else:
+            enddate = position.get('end-date', {})
+            endyear = enddate.get('year', u'now')
+            end = u'%s' % endyear
+            experience += u'%s to %s, %s, %s\n' % (position['start-date']['year'],
+                                                   end,
+                                                   position['title'],
+                                                   position['company']['name'])
     education = u''
-    for edu in extra_data.get('educations', {}).values():
-        for v in edu.values():
-            if isinstance(v, dict):
-                v = v.values()[0]
-            education += v + u', '
-        education += u'\n'
+    e = extra_data.get('educations', {})
+    if isinstance(e, dict):
+        for edu in extra_data.get('educations', {}).values():
+            for v in edu.values():
+                if isinstance(v, dict):
+                    v = v.values()[0]
+                education += v + u', '
+            education += u'\n'
 
     c = {
         "three": [1, 2, 3],
