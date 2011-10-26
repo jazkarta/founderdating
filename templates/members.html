@@ -5,6 +5,7 @@
 <div id="fd_members">
 
 <form method="POST">
+  {% csrf_token %}
   <div class="member-search">
     <fieldset class="keyword">
       <h1>Search by Keyword</h1>
@@ -38,7 +39,7 @@
         <div class="missing-portrait"></div>
 {% endif %}
       </div>
-      <h1 class="name">-{{ profile.name }}-</h1>
+      <h1 class="name">{{ profile.name }}</h1>
       <p class="bio">bio text</p>
     </div>
     {% endfor %}

@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.http import require_POST
-from profiles.models import Applicant, EmailTemplate, Event, FdProfile
+from profiles.models import LinkedinProfile, Applicant, EmailTemplate, Event, FdProfile
 import json
 
 
@@ -137,12 +137,25 @@ def email_form(request):
                               context_instance=RequestContext(request))
 
 
-member_search_fields = []
+member_search_fields = [
+    'user__first_name__contains',
+    'user__last_name__contains',
+    'user__username__contains',
+    'past_experience_blurb__contains',
+    'bring_blurb__contains',
+    'building_blurb__contains',
+    ]
 
 
 def member_dict(profile):
+    try:
+        linkedin = LinkedinProfile.objects.get(id=profile.id)
+        portrait_url = linkedin.profile_picture
+    except LinkedinProfile.DoesNotExist:
+        portrait_url = None
+
     member = {
-        'portrait_url': '',
+        'portrait_url': portrait_url,
         'name': profile.user.first_name + u' ' + profile.user.last_name,
         }
     return member
@@ -155,16 +168,13 @@ from django.core.paginator import Paginator
 def members(request):
     search = request.POST.get('s', '')
 
+    q = Q()
     if search:
-        for fields in member_search_fields:
-            q = Q()
-            for field in fields:
-                kwargs = {field: search}
-                q = q | Q(**kwargs)
-    else:
-        q = Q()
+        for field in member_search_fields:
+            kwargs = {field: search}
+            q = q | Q(**kwargs)
 
-    paginator = Paginator(FdProfile.objects.filter(q), 20)
+    paginator = Paginator(FdProfile.objects.filter(q), 10)
     page = paginator.page(int(request.GET.get('p', 1)))
 
     profiles = []
