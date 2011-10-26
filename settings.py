@@ -72,6 +72,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    ROOT_PATH + '/profiles/static',
 )
 
 # List of finder classes that know how to find static files in
@@ -228,6 +229,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.i18n',
     'django.core.context_processors.request',
     'django.core.context_processors.media',
+    'django.core.context_processors.static',
     'cms.context_processors.media',
     'zinnia.context_processors.media',
     'profiles.context_processors.fd_context'
