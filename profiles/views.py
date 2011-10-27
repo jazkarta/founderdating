@@ -21,7 +21,10 @@ def attend(request):
     info = extra_data.get('twitter-accounts', {})
     if info:
         for info in info.get('twitter-account', []):
-            twitter = info['provider-account-name']
+            if isinstance(info, dict):
+                twitter = info.get('provider-account-name', u'')
+            else:
+                twitter = unicode(info)
             break
 
     location = extra_data.get('location', {})
