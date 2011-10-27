@@ -31,7 +31,10 @@
             {{user.username}}
           {% endif %}
         {% endif %}
-        &nbsp; &nbsp; <input type="button" onclick='window.location.href="{% url userena_profile_edit user.username %}"' class="small_button" value="Edit profile" />
+        &nbsp; &nbsp; 
+        <input type="button" onclick='window.location.href="{% url members-search %}"' class="small_button" value="Members search" />
+        &nbsp; &nbsp;
+        <input type="button" onclick='window.location.href="{% url userena_profile_edit user.username %}"' class="small_button" value="Edit profile" />
         <input type="button" onclick='window.location.href="{% url userena_signout %}"' class="small_button" value="Sign out" />
     {% else %}
              You are not signed in &nbsp; &nbsp; <input type="button" onclick='window.location.href="/profiles/signin/"' class="small_button" value="Sign in" />
