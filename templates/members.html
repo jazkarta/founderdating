@@ -19,9 +19,39 @@
     <fieldset class="filter">
       <h1>Filter by</h1>
       <div class="fields">
-        <select>
-          <option>Event</option>
-        </select>
+        <div class="field">
+          <select name="filter_event__id">
+            <option disabled>Event</option>
+            {% for event in events %}
+              <option value="{{event.id}}">{{event.event_location.display}} - {{event.event_date}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="field">
+          <select>
+            <option>City</option>
+          </select>
+        </div>
+        <div class="field">
+          <select>
+            <option>Interest Areas</option>
+          </select>
+        </div>
+        <div class="field">
+          <select>
+            <option>Skill Sets</option>
+          </select>
+        </div>
+        <div class="field">
+          <select>
+            <option>Start Date</option>
+          </select>
+        </div>
+        <div class="field">
+          <select>
+            <option>Status</option>
+          </select>
+        </div>
       </div>
       <div class="actions">
         <input type="submit" value="Go">

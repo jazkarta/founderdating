@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
@@ -10,10 +11,11 @@ def attend(request):
     context_instance = RequestContext(request)
     user = context_instance['user']
 
+    extra_data = {}
     if hasattr(user, 'social_auth'):
-        extra_data = context_instance['user'].social_auth.all()[0].extra_data
-    else:
-        extra_data = {}
+        sa = context_instance['user'].social_auth.all()
+        if sa is not None and len(sa) >= 1:
+            extra_data = sa[0].extra_data
 
     twitter = u''
     info = extra_data.get('twitter-accounts', {})
@@ -23,7 +25,7 @@ def attend(request):
             break
 
     location = extra_data.get('location', {})
-    location = location['name']
+    location = location.get('name', u'')
 
     positions = extra_data.get('positions', {})
     experience = u''
@@ -174,6 +176,12 @@ def members(request):
             kwargs = {field: search}
             q = q | Q(**kwargs)
 
+    for key, value in request.POST.items():
+        if not key.startswith('filter_') or not value:
+            continue
+        name = key[7:]
+        q = q | Q(**{name: value})
+
     paginator = Paginator(FdProfile.objects.filter(q), 10)
     page = paginator.page(int(request.GET.get('p', 1)))
 
@@ -181,6 +189,7 @@ def members(request):
     for profile in page.object_list:
         profiles.append(member_dict(profile))
 
-    c = {'profiles': profiles}
+    c = {'profiles': profiles,
+         'events': Event.objects.all()}
     return render_to_response('members.html', c,
                               context_instance=RequestContext(request))

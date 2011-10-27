@@ -758,6 +758,9 @@ form fieldset input[type=text], input[type=password]{
     width: 65%;
     padding: 0.5em;
 }
+.member-search select {
+    width: 10em;
+}
 
 #fd_members .member-search h1 {
     font-size: 1.3em;
