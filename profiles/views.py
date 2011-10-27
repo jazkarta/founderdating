@@ -50,7 +50,9 @@ def attend(request):
     e = extra_data.get('educations', {})
     if isinstance(e, dict):
         for edu in extra_data.get('educations', {}).values():
-            for v in edu.values():
+            if isinstance(edu, {}):
+                edu = edu.values()
+            for v in edu:
                 if isinstance(v, dict):
                     v = v.values()[0]
                 education += v + u', '
