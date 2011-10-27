@@ -55,7 +55,7 @@ def attend(request):
             for v in edu:
                 if isinstance(v, dict):
                     v = v.values()[0]
-                education += v + u', '
+                education += unicode(v) + u', '
             education += u'\n'
 
     c = {
