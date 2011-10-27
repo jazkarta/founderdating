@@ -43,7 +43,7 @@ urlpatterns = patterns('',
     (r'^email_form', 'profiles.views.email_form'),
 
     # E-mail forms for the admin
-    (r'^members', 'profiles.views.members', name="members-search"),
+    url(r'^members', 'profiles.views.members', name='members-search'),
 
     # Zinnia (blog)
     url(r'^blog/', include('zinnia.urls')),
