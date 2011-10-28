@@ -765,7 +765,6 @@ form fieldset input[type=text], input[type=password]{
 }
 .member-listing {
     display: inline-block;
-    border: 1px green dotted;
     vertical-align: top;
     width: 65%;
     padding: 0.5em;
