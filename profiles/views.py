@@ -145,12 +145,13 @@ def email_form(request):
 
 
 member_search_fields = [
-    'user__first_name__contains',
-    'user__last_name__contains',
-    'user__username__contains',
-    'past_experience_blurb__contains',
-    'bring_blurb__contains',
-    'building_blurb__contains',
+    'user__first_name__icontains',
+    'user__last_name__icontains',
+    'user__username__icontains',
+    'bio__icontains',
+    'past_experience_blurb__icontains',
+    'bring_blurb__icontains',
+    'building_blurb__icontains',
     ]
 
 
