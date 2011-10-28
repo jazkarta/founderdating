@@ -800,12 +800,19 @@ form fieldset input[type=text], input[type=password]{
     width: 160px;
     overflow: auto;
     display: inline-block;
+    vertical-align: top;
 }
 .member-listing .img-wrapper {
     height: 140px;
     width: 140px;
     border: 1px solid #ddd;
     margin: auto;
+}
+.member-listing img {
+    height: 80px;
+    width: 80px;
+    margin-left: 30px;
+    margin-top: 30px;
 }
 .member-listing .missing-portrait:after {
     content: "missing portrait";

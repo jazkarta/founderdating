@@ -198,7 +198,8 @@ def members(request):
         'profiles': profiles,
         'events': Event.objects.all(),
         'interests': Interest.objects.all(),
-        'skillsets': Skillset.objects.all()
+        'skillsets': Skillset.objects.all(),
+        'members_page': page,
         }
     return render_to_response('members.html', c,
                               context_instance=RequestContext(request))
