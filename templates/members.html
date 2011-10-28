@@ -27,14 +27,14 @@
             {% endfor %}
           </select>
         </div>
-        <!-- TODO: need to add city to database model -->
-        <!-- 
         <div class="field">
-          <select>
+          <select name="filter_city__icontains">
             <option>City</option>
+            {% for city in cities %}
+              <option value="{{city}}">{{city}}</option>
+            {% endfor %}
           </select>
         </div>
-        -->
         <div class="field">
           <select name="filter_interest_areas__id__contains">
             <option disabled>Interest Areas</option> 

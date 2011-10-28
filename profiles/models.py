@@ -48,6 +48,7 @@ class FdProfile(UserenaBaseProfile):
     user = models.OneToOneField(User,
                                 verbose_name='user',
                                 related_name='fdprofile_user')
+    city = models.CharField(max_length=100, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True, auto_now=True)
     bring_skillsets_json = models.TextField(blank=True, null=True)

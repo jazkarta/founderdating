@@ -187,7 +187,12 @@ def members(request):
         if not key.startswith('filter_') or not value:
             continue
         name = key[7:]
+        if isinstance(value, list) and len(value) == 1:
+            value = value[0]
         q = q | Q(**{name: value})
+
+    cities = FdProfile.objects.values_list('city').order_by('city').distinct()
+    cities = [x[0].title() for x in cities if x[0]]
 
     paginator = Paginator(FdProfile.objects.filter(q), 12)
     try:
@@ -204,6 +209,7 @@ def members(request):
         'events': Event.objects.all(),
         'interests': Interest.objects.all(),
         'skillsets': Skillset.objects.all(),
+        'cities': cities,
         'members_page': page,
         }
     return render_to_response('members.html', c,
