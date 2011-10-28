@@ -36,6 +36,18 @@ ul.errorlist li {
 
 /* Header
 ----------------------------------------------- */
+#fd_header ul {
+    display: inline;
+    font-size: 0.8em;
+    color: #ccc;
+    float: right;
+}
+#fd_header a {
+    color: #ccc;
+}
+#fd_header li {
+    display: inline;
+}
 #fd_header {
   margin-bottom: 20px;
   background: #212121 url(/static/img/header.slope.png) no-repeat 50% 0;
