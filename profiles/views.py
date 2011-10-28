@@ -187,8 +187,11 @@ def members(request):
         name = key[7:]
         q = q | Q(**{name: value})
 
-    paginator = Paginator(FdProfile.objects.filter(q), 10)
-    page = paginator.page(int(request.GET.get('p', 1)))
+    paginator = Paginator(FdProfile.objects.filter(q), 12)
+    try:
+        page = paginator.page(int(request.GET.get('p', 1)))
+    except:
+        page = paginator.page(1)
 
     profiles = []
     for profile in page.object_list:

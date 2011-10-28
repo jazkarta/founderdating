@@ -81,6 +81,8 @@
   </div>
 
   <div class="member-listing">
+    {% include "pagination.html" %}
+
     {% for profile in profiles %}
     <div class="member-info">
       <div class="img-wrapper">
@@ -91,25 +93,14 @@
 {% endif %}
       </div>
       <h1 class="name">{{ profile.name }}</h1>
+      <!-- TODO: add bio to database modle for fdprofile -->
+      <!--
       <p class="bio">bio text</p>
+      -->
     </div>
     {% endfor %}
 
-    <div class="pagination">
-      <span class="step-links">
-        {% if members_page.has_previous %}
-          <a href="?p={{ members_page.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ members_page.number }} of {{ members_page.paginator.num_pages }}.
-        </span>
-
-        {% if members_page.has_next %}
-            <a href="?p={{ members_page.next_page_number }}">next</a>
-        {% endif %}
-      </span>
-    </div>
+    {% include "pagination.html" %}
   </div>
 </form>
 </div>
