@@ -16,13 +16,12 @@
 <div id="fd_header">
   <div class="gasket">
     <div class="account">
-      <ul class="user-actions">
+    <p>
     {% if user.is_superuser %}
-      <li><a href="/internal_admin/"><img src="/static/img/superman_icon.png"></a></li>
+      <a href="/internal_admin/"><img src="/static/img/superman_icon.png"></a>
     {% endif %}
     {% if user.is_authenticated %}
-      <li>
-             Signed in as 
+              Signed in as 
         {%if user.first_name %}
           {{user.first_name}} {{user.last_name}}
         {% else %}
@@ -32,15 +31,15 @@
             {{user.username}}
           {% endif %}
         {% endif %}
-      </li>
-      <li><input type="button" onclick='window.location.href="{% url userena_profile_edit user.username %}"' class="small_button" value="Edit profile" /></li>
-      <li><input type="button" onclick='window.location.href="{% url userena_signout %}"' class="small_button" value="Sign out" /></li>
-      {% url profiles.views.members as members_url %}
-      <li><a href="{{members_url}}">Members</a></li>
+        &nbsp; &nbsp; 
+        <input type="button" onclick='window.location.href="{% url members-search %}"' class="small_button" value="Members search" />
+        &nbsp; &nbsp;
+        <input type="button" onclick='window.location.href="{% url userena_profile_edit user.username %}"' class="small_button" value="Edit profile" />
+        <input type="button" onclick='window.location.href="{% url userena_signout %}"' class="small_button" value="Sign out" />
     {% else %}
-      <li>You are not signed in &nbsp; &nbsp; <input type="button" onclick='window.location.href="/profiles/signin/"' class="small_button" value="Sign in" /></li>
+             You are not signed in &nbsp; &nbsp; <input type="button" onclick='window.location.href="/profiles/signin/"' class="small_button" value="Sign in" />
     {% endif %}
-    </ul>
+    </p>
     </div><!-- .account -->
 
     <h1><a href="/">FounderDating</a></h1>
