@@ -1,4 +1,3 @@
-import datetime
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
