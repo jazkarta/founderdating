@@ -164,6 +164,7 @@ def member_dict(profile):
     member = {
         'portrait_url': portrait_url,
         'name': profile.user.first_name + u' ' + profile.user.last_name,
+        'bio': profile.bio or u'',
         }
     return member
 

@@ -823,7 +823,9 @@ form fieldset input[type=text], input[type=password]{
     font-size: 1.2em;
     text-align: center;
 }
-
+#fd_members .member-info p {
+    text-align: center;
+}
 
 .pagination {
     margin: 1em 0;

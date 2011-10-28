@@ -8,153 +8,36 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding model 'Skillset'
-        db.create_table('profiles_skillset', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('ord', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
-        ))
-        db.send_create_signal('profiles', ['Skillset'])
+        # Adding field 'FdProfile.bio'
+        db.add_column('profiles_fdprofile', 'bio', self.gf('django.db.models.fields.TextField')(null=True, blank=True), keep_default=False)
 
-        # Adding model 'Interest'
-        db.create_table('profiles_interest', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('ord', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
+        # Adding M2M table for field interest_areas on 'FdProfile'
+        db.create_table('profiles_fdprofile_interest_areas', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('fdprofile', models.ForeignKey(orm['profiles.fdprofile'], null=False)),
+            ('interest', models.ForeignKey(orm['profiles.interest'], null=False))
         ))
-        db.send_create_signal('profiles', ['Interest'])
+        db.create_unique('profiles_fdprofile_interest_areas', ['fdprofile_id', 'interest_id'])
 
-        # Adding model 'FdProfile'
-        db.create_table('profiles_fdprofile', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('mugshot', self.gf('django.db.models.fields.files.ImageField')(max_length=100, blank=True)),
-            ('privacy', self.gf('django.db.models.fields.CharField')(default='registered', max_length=15)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='fdprofile_user', unique=True, to=orm['auth.User'])),
-            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, auto_now_add=True, blank=True)),
-            ('bring_skillsets_json', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('need_skillsets_json', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('interests_json', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('past_experience_blurb', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('bring_blurb', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('building_blurb', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('can_start', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
-            ('idea_status', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
-            ('event_status', self.gf('django.db.models.fields.CharField')(default='Pending', max_length=25)),
-            ('founder_type', self.gf('django.db.models.fields.CharField')(max_length=15, null=True, blank=True)),
-            ('linkedin_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('event', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['profiles.Event'], null=True, blank=True)),
-            ('comments', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+        # Adding M2M table for field skillsets on 'FdProfile'
+        db.create_table('profiles_fdprofile_skillsets', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('fdprofile', models.ForeignKey(orm['profiles.fdprofile'], null=False)),
+            ('skillset', models.ForeignKey(orm['profiles.skillset'], null=False))
         ))
-        db.send_create_signal('profiles', ['FdProfile'])
-
-        # Adding model 'Applicant'
-        db.create_table('profiles_applicant', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('email', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, auto_now_add=True, blank=True)),
-            ('bring_skillsets_json', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('need_skillsets_json', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('recommend_json', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('interests_json', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('past_experience_blurb', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('bring_blurb', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('building_blurb', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('can_start', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
-            ('idea_status', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
-            ('event_status', self.gf('django.db.models.fields.CharField')(default='Pending', max_length=25)),
-            ('founder_type', self.gf('django.db.models.fields.CharField')(max_length=15, null=True, blank=True)),
-            ('linkedin_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('event', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['profiles.Event'], null=True, blank=True)),
-            ('event_group', self.gf('django.db.models.fields.PositiveSmallIntegerField')(null=True, blank=True)),
-            ('comments', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-        ))
-        db.send_create_signal('profiles', ['Applicant'])
-
-        # Adding model 'Recommendation'
-        db.create_table('profiles_recommendation', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('fdprofile', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['profiles.FdProfile'])),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('email', self.gf('django.db.models.fields.CharField')(max_length=100)),
-        ))
-        db.send_create_signal('profiles', ['Recommendation'])
-
-        # Adding model 'LinkedinProfile'
-        db.create_table('profiles_linkedinprofile', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, auto_now_add=True, blank=True)),
-            ('fd_profile', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['profiles.FdProfile'], unique=True)),
-            ('oauth_object', self.gf('django.db.models.fields.TextField')(max_length=500)),
-            ('profile_raw', self.gf('django.db.models.fields.TextField')()),
-            ('profile_picture', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('profile_location', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('profile_industry', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('connections_raw', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('profiles', ['LinkedinProfile'])
-
-        # Adding model 'Event'
-        db.create_table('profiles_event', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('event_date', self.gf('django.db.models.fields.DateField')()),
-            ('event_location', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['profiles.EventLocation'])),
-            ('description', self.gf('django.db.models.fields.TextField')(max_length=1000)),
-            ('apply_deadline', self.gf('django.db.models.fields.DateField')()),
-        ))
-        db.send_create_signal('profiles', ['Event'])
-
-        # Adding model 'EventLocation'
-        db.create_table('profiles_eventlocation', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('display', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('city', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('state', self.gf('django.db.models.fields.CharField')(max_length=2)),
-            ('country', self.gf('django.db.models.fields.CharField')(max_length=100)),
-        ))
-        db.send_create_signal('profiles', ['EventLocation'])
-
-        # Adding model 'EmailTemplate'
-        db.create_table('profiles_emailtemplate', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('subject', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('message', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('profiles', ['EmailTemplate'])
+        db.create_unique('profiles_fdprofile_skillsets', ['fdprofile_id', 'skillset_id'])
 
 
     def backwards(self, orm):
         
-        # Deleting model 'Skillset'
-        db.delete_table('profiles_skillset')
+        # Deleting field 'FdProfile.bio'
+        db.delete_column('profiles_fdprofile', 'bio')
 
-        # Deleting model 'Interest'
-        db.delete_table('profiles_interest')
+        # Removing M2M table for field interest_areas on 'FdProfile'
+        db.delete_table('profiles_fdprofile_interest_areas')
 
-        # Deleting model 'FdProfile'
-        db.delete_table('profiles_fdprofile')
-
-        # Deleting model 'Applicant'
-        db.delete_table('profiles_applicant')
-
-        # Deleting model 'Recommendation'
-        db.delete_table('profiles_recommendation')
-
-        # Deleting model 'LinkedinProfile'
-        db.delete_table('profiles_linkedinprofile')
-
-        # Deleting model 'Event'
-        db.delete_table('profiles_event')
-
-        # Deleting model 'EventLocation'
-        db.delete_table('profiles_eventlocation')
-
-        # Deleting model 'EmailTemplate'
-        db.delete_table('profiles_emailtemplate')
+        # Removing M2M table for field skillsets on 'FdProfile'
+        db.delete_table('profiles_fdprofile_skillsets')
 
 
     models = {
@@ -242,6 +125,7 @@ class Migration(SchemaMigration):
         },
         'profiles.fdprofile': {
             'Meta': {'object_name': 'FdProfile'},
+            'bio': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'bring_blurb': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'bring_skillsets_json': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'building_blurb': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
@@ -253,12 +137,14 @@ class Migration(SchemaMigration):
             'founder_type': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'idea_status': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
+            'interest_areas': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['profiles.Interest']", 'symmetrical': 'False'}),
             'interests_json': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'linkedin_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'mugshot': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'blank': 'True'}),
             'need_skillsets_json': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'past_experience_blurb': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'privacy': ('django.db.models.fields.CharField', [], {'default': "'registered'", 'max_length': '15'}),
+            'skillsets': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['profiles.Skillset']", 'symmetrical': 'False'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'fdprofile_user'", 'unique': 'True', 'to': "orm['auth.User']"})
         },

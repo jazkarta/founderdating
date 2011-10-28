@@ -3,6 +3,22 @@ from django.db import models
 from userena.models import UserenaBaseProfile
 
 
+class Skillset(models.Model):
+    name = models.CharField(max_length=100)
+    ord = models.PositiveSmallIntegerField()
+
+    def __unicode__(self):
+        return self.name
+
+
+class Interest(models.Model):
+    name = models.CharField(max_length=100)
+    ord = models.PositiveSmallIntegerField()
+
+    def __unicode__(self):
+        return self.name
+
+
 class FdProfile(UserenaBaseProfile):
     START_CHOICES = (
         ('immediately', 'Immediately'),
@@ -53,6 +69,12 @@ class FdProfile(UserenaBaseProfile):
     linkedin_url = models.URLField(blank=True, null=True)
     event = models.ForeignKey('Event', null=True, blank=True)
     comments = models.TextField(blank=True, null=True)
+
+    bio = models.TextField(blank=True, null=True)
+    interest_areas = models.ManyToManyField(Interest, null=True,
+                                            blank=True)
+    skillsets = models.ManyToManyField(Skillset, null=True,
+                                       blank=True)
 
     def __unicode__(self):
         return u'<FdProfile linked_url=%s>' % self.linkedin_url
@@ -142,22 +164,6 @@ class EventLocation(models.Model):
 
     def __unicode__(self):
         return self.display
-
-
-class Skillset(models.Model):
-    name = models.CharField(max_length=100)
-    ord = models.PositiveSmallIntegerField()
-
-    def __unicode__(self):
-        return self.name
-
-
-class Interest(models.Model):
-    name = models.CharField(max_length=100)
-    ord = models.PositiveSmallIntegerField()
-
-    def __unicode__(self):
-        return self.name
 
 
 class EmailTemplate(models.Model):
