@@ -35,28 +35,22 @@
           </select>
         </div>
         -->
-        <!-- TODO: need to add interest areas as a relation to FdProfile -->
-        <!--
         <div class="field">
-          <select name="filter_">
+          <select name="filter_interest_areas__id__contains">
             <option disabled>Interest Areas</option> 
             {% for interest in interests %}
               <option value="{{interest.id}}">{{interest.name}}</option>
             {% endfor %}
           </select>
         </div>
-        -->
-        <!-- TODO: need to add skill set as a relation to FdProfile -->
-        <!--
         <div class="field">
-          <select>
+          <select name="filter_skillsets__id__contains">
             <option disabled>Skill Sets</option>
             {% for skillset in skillsets %}
               <option value="{{skillset.id}}">{{skillset.name}}</option>
             {% endfor %}
           </select>
         </div>
-        -->
         <!-- TODO: how do we handle a start date dropdown? -->
         <!--
         <div class="field">
