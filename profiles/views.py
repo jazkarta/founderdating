@@ -3,7 +3,8 @@ from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.http import require_POST
-from profiles.models import LinkedinProfile, Applicant, EmailTemplate, Event, FdProfile
+from profiles.models import (LinkedinProfile, Applicant, EmailTemplate,
+                             Event, FdProfile, Interest, Skillset)
 import json
 
 
@@ -194,7 +195,11 @@ def members(request):
     for profile in page.object_list:
         profiles.append(member_dict(profile))
 
-    c = {'profiles': profiles,
-         'events': Event.objects.all()}
+    c = {
+        'profiles': profiles,
+        'events': Event.objects.all(),
+        'interests': Interest.objects.all(),
+        'skillsets': Skillset.objects.all()
+        }
     return render_to_response('members.html', c,
                               context_instance=RequestContext(request))

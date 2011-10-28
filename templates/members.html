@@ -27,31 +27,46 @@
             {% endfor %}
           </select>
         </div>
+        <!-- TODO: need to add city to database model -->
+        <!-- 
         <div class="field">
           <select>
             <option>City</option>
           </select>
         </div>
+        -->
         <div class="field">
           <select>
-            <option>Interest Areas</option>
+            <option disabled>Interest Areas</option> 
+            {% for interest in interests %}
+              <option value="{{interest.id}}">{{interest.name}}</option>
+            {% endfor %}
           </select>
         </div>
         <div class="field">
           <select>
-            <option>Skill Sets</option>
+            <option disabled>Skill Sets</option>
+            {% for skillset in skillsets %}
+              <option value="{{skillset.id}}">{{skillset.name}}</option>
+            {% endfor %}
           </select>
         </div>
+        <!-- TODO: how do we handle a start date dropdown? -->
+        <!--
         <div class="field">
           <select>
             <option>Start Date</option>
           </select>
         </div>
+        -->
+        <!-- TODO: what is the status? idea status? event status? -->
+        <!--
         <div class="field">
           <select>
             <option>Status</option>
           </select>
         </div>
+        -->
       </div>
       <div class="actions">
         <input type="submit" value="Go">
