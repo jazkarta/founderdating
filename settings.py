@@ -263,5 +263,6 @@ ENVIRONMENT = os.environ.get("FD_ENVIRONMENT", "dev")
 # Specify all your settings in a file named local_settings
 try:
     from local_settings import *
-except ImportError:
-    pass
+    INSTALLED_APPS = tuple(list(INSTALLED_APPS) + list(EXTRA_INSTALLED_APPS))
+except:
+    logging.getLogger().exception('error occurred')
