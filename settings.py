@@ -265,4 +265,5 @@ try:
     from local_settings import *
     INSTALLED_APPS = tuple(list(INSTALLED_APPS) + list(EXTRA_INSTALLED_APPS))
 except:
+    import logging
     logging.getLogger().exception('error occurred')
