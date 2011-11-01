@@ -157,7 +157,7 @@ member_search_fields = [
 
 def member_dict(profile):
     try:
-        linkedin = LinkedinProfile.objects.get(id=profile.id)
+        linkedin = LinkedinProfile.objects.get(fd_profile=profile)
         portrait_url = linkedin.profile_picture
     except LinkedinProfile.DoesNotExist:
         portrait_url = None
