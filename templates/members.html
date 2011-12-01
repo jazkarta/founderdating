@@ -10,7 +10,7 @@
     <fieldset class="keyword">
       <h1>Search by Keyword</h1>
       <div class="fields">
-        <input type="text" name="s" value="">
+        <input type="text" name="s" value="{{ s }}">
       </div>
       <div class="actions">
         <input type="submit" value="Go">
@@ -20,7 +20,7 @@
       <h1>Filter by</h1>
       <div class="fields">
         <div class="field">
-          <select name="filter_event__id">
+          <select name="filter.FdProfile.event__id,filter.Applicant.event__id">
             <option disabled>Event</option>
             {% for event in events %}
               <option value="{{event.id}}">{{event.event_location.display}} - {{event.event_date}}</option>
@@ -28,7 +28,7 @@
           </select>
         </div>
         <div class="field">
-          <select name="filter_city__icontains">
+          <select name="filter.FdProfile.city__icontains">
             <option>City</option>
             {% for city in cities %}
               <option value="{{city}}">{{city}}</option>
@@ -36,7 +36,7 @@
           </select>
         </div>
         <div class="field">
-          <select name="filter_interest_areas__id__contains">
+          <select name="filter.FdProfile.interest_areas__id__contains">
             <option disabled>Interest Areas</option> 
             {% for interest in interests %}
               <option value="{{interest.id}}">{{interest.name}}</option>
@@ -44,29 +44,29 @@
           </select>
         </div>
         <div class="field">
-          <select name="filter_skillsets__id__contains">
+          <select name="filter.FdProfile.skillsets__id__contains">
             <option disabled>Skill Sets</option>
             {% for skillset in skillsets %}
               <option value="{{skillset.id}}">{{skillset.name}}</option>
             {% endfor %}
           </select>
         </div>
-        <!-- TODO: how do we handle a start date dropdown? -->
-        <!--
         <div class="field">
-          <select>
-            <option>Start Date</option>
+          <select name="filter.FdProfile.status">
+            <option disabled>Status</option>
+            {% for status_option in status_options %}
+              <option value="{{status_option.value}}">{{status_option.label}}</option>
+            {% endfor %}
           </select>
         </div>
-        -->
-        <!-- TODO: what is the status? idea status? event status? -->
-        <!--
         <div class="field">
-          <select>
-            <option>Status</option>
+          <select name="filter.FdProfile.can_start">
+            <option disabled>Start Date</option>
+            {% for start_date in start_dates %}
+              <option value="{{start_date.value}}">{{start_date.label}}</option>
+            {% endfor %}
           </select>
         </div>
-        -->
       </div>
       <div class="actions">
         <input type="submit" value="Go">
@@ -75,23 +75,29 @@
   </div>
 
   <div class="member-listing">
-    {% include "pagination.html" %}
+    {% if members_matched > 0 %}
+      {% include "pagination.html" %}
+    {% else %}
+      No members matched your query
+    {% endif %}
 
     {% for profile in profiles %}
     <div class="member-info">
       <div class="img-wrapper">
-{% if profile.portrait_url %}
-        <img src="{{profile.portrait_url}}">
-{% else %}
-        <div class="missing-portrait"></div>
-{% endif %}
+        {% if profile.portrait_url %}
+          <img src="{{profile.portrait_url}}">
+        {% else %}
+          <div class="missing-portrait"></div>
+        {% endif %}
       </div>
       <h1 class="name">{{ profile.name }}</h1>
       <p class="bio">{{profile.bio}}</p>
     </div>
     {% endfor %}
 
-    {% include "pagination.html" %}
+    {% if members_matched > 0 %}
+      {% include "pagination.html" %}
+    {% endif %}
   </div>
 </form>
 </div>

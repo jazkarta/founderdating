@@ -20,6 +20,11 @@ class Interest(models.Model):
 
 
 class FdProfile(UserenaBaseProfile):
+    STATUS_CHOICES = (
+        ('available', 'Available'),
+        ('not available', 'Not Available'),
+        ('not looking', 'Not Looking'),
+        )
     START_CHOICES = (
         ('immediately', 'Immediately'),
         ('part now full soon', 'Part-time now, full-time soon'),
@@ -87,7 +92,8 @@ class Applicant(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
 
-    # Effectively a copy of FdProfile
+    fdprofile = models.ForeignKey(FdProfile, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True, auto_now=True)
     bring_skillsets_json = models.TextField(blank=True, null=True,
