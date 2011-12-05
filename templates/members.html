@@ -83,6 +83,7 @@
 
     {% for profile in profiles %}
     <div class="member-info">
+    <a href="profiles/{{profile.username}}/">
       <div class="img-wrapper">
         {% if profile.portrait_url %}
           <img src="{{profile.portrait_url}}">
@@ -92,6 +93,7 @@
       </div>
       <h1 class="name">{{ profile.name }}</h1>
       <p class="bio">{{profile.bio}}</p>
+    </a>
     </div>
     {% endfor %}
 

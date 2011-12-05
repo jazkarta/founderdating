@@ -20,6 +20,9 @@ urlpatterns = patterns('',
     (r'^profiles/', include('userena.urls')),
     (r'^accounts/', include('userena.urls')),
 
+    (r'^profiles/(?P<username>(?!signout|signup|signin)[@\.\w]+)/$',
+     'userena.views.profile_detail'),
+
     # Application process
     (r'^attend/save', 'profiles.views.attend_save'),
     (r'^attend/thanks', 'profiles.views.attend_thanks'),

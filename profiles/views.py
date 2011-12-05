@@ -172,8 +172,10 @@ def member_dict(profile):
         except LinkedinProfile.DoesNotExist:
             pass
 
+    username = u''
     if hasattr(profile, 'user'):
         name = profile.user.first_name + u' ' + profile.user.last_name
+        username = profile.user.username
     else:
         name = profile.name
 
@@ -181,6 +183,8 @@ def member_dict(profile):
         'portrait_url': portrait_url,
         'name': name,
         'bio': getattr(profile, 'bio', u'') or u'',
+        'username': username,
+        'user': getattr(profile, 'user', None),
         }
     return member
 
@@ -268,10 +272,15 @@ def members(request):
             if not filter_counts.get(model, None):
                 del queries[model]
 
-    objects = []
-    for model, query in queries.items():
-        filter_ = getattr(model, 'objects').filter
-        objects.append(filter_(query))
+    # this was setup to query both FdProfile and Applicant entries
+    # but atm Applicants have no "profile" links
+
+    # objects = []
+    # for model, query in queries.items():
+    #     filter_ = getattr(model, 'objects').filter
+    #     objects.append(filter_(query))
+
+    objects = [FdProfile.objects.filter(queries.get(FdProfile))]
 
     joiner = IterJoiner(*objects)
     paginator = Paginator(joiner, 12)
@@ -307,60 +316,3 @@ def members(request):
         }
     return render_to_response('members.html', c,
                               context_instance=RequestContext(request))
-
-
-# def members_(request):
-#     search = request.POST.get('s', '')
-
-#     queries = [Q() for x in sorted(possible.keys())]
-#     if search:
-#         for x in range(len(queries)):
-#             for field in member_search_fields[x]:
-#                 queries[x] = queries[x] | Q(**{field: search})
-
-#     for key, value in request.POST.items():
-#         for x in range(len(queries)):
-#             k = sorted(possible.keys())[x]
-#             if key.startswith(k):
-#                 name = key[len(k):]
-#                 if isinstance(value, list) and len(value) == 1:
-#                     value = value[0]
-#                 queries[x] = queries[x] | Q(**{name: value})
-
-#     cities = FdProfile.objects.values_list('city').order_by('city').distinct()
-#     cities = [x[0].title() for x in cities if x[0]]
-
-#     keys = sorted(possible.keys())
-#     objects = []
-#     for x in range(len(queries)):
-#         objects.append(possible[keys[x]].objects.filter(queries[x]))
-
-#     paginator = Paginator(IterJoiner(*objects), 12)
-#     try:
-#         page = paginator.page(int(request.GET.get('p', 1)))
-#     except:
-#         page = paginator.page(1)
-
-#     profiles = []
-#     for profile in page.object_list:
-#         profiles.append(member_dict(profile))
-
-#     status_options = [{'value': x[0], 'label': x[1]}
-#                       for x in FdProfile.STATUS_CHOICES]
-
-#     start_dates = [{'value': x[0], 'label': x[1]}
-#                   for x in FdProfile.START_CHOICES]
-
-#     c = {
-#         'profiles': profiles,
-#         'events': Event.objects.all(),
-#         'interests': Interest.objects.all(),
-#         'skillsets': Skillset.objects.all(),
-#         'cities': cities,
-#         'status_options': status_options,
-#         'members_page': page,
-#         'start_dates': start_dates,
-#         's': request.POST.get('s', u''),
-#         }
-#     return render_to_response('members.html', c,
-#                               context_instance=RequestContext(request))

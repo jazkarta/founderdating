@@ -830,3 +830,11 @@ form fieldset input[type=text], input[type=password]{
     margin: 1em 0;
     text-align: center;
 }
+
+.member-info a {
+    display: block;
+}
+
+.member-info a:hover {
+    background-color: #eee;
+}
