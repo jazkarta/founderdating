@@ -187,7 +187,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 AUTH_PROFILE_MODULE = "profiles.FdProfile"
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/smart_redirect'
 LOGIN_URL = '/profiles/signin/'
 LOGOUT_URL = '/profiles/signout/'
 

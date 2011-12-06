@@ -53,6 +53,9 @@ urlpatterns = patterns('',
     url(r'^comments/', include('django.contrib.comments.urls')),
 
     # django cms
+    url(r'^smart_redirect$', 'profiles.views.smart_redirect'),
+
+    # django cms
     url(r'^', include('cms.urls')),
 
 )

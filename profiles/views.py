@@ -12,6 +12,7 @@ import logging
 logger = logging.getLogger('fd')
 
 
+@login_required
 def attend(request):
     context_instance = RequestContext(request)
     user = context_instance['user']
@@ -82,8 +83,13 @@ def attend(request):
                               context_instance=context_instance)
 
 
+@login_required
 @require_POST
 def attend_save(request):
+    context_instance = RequestContext(request)
+    user = context_instance['user']
+    fdprofile = FdProfile.objects.get(user_id=user.id)
+
     e = Event.objects.filter(pk=request.POST.get("event_id", -1))
     if len(e) < 1:
         raise Exception("Invalid Event")
@@ -115,7 +121,8 @@ def attend_save(request):
         idea_status=request.POST.get("idea_status"),
         need_skillsets_json=json.dumps(
             request.POST.getlist("need_skillsets")),
-        recommend_json=json.dumps(recommend)
+        recommend_json=json.dumps(recommend),
+        fdprofile_id=fdprofile.id,
     )
     applicant.save()
 
@@ -316,3 +323,13 @@ def members(request):
         }
     return render_to_response('members.html', c,
                               context_instance=RequestContext(request))
+
+
+def smart_redirect(request):
+    referer = request.META.get('HTTP_REFERER', '')
+    if referer and '?' in referer:
+        s = referer.split('?')[-1]
+        if '=' in s:
+            last = s.split('=')[1]
+            return redirect(last)
+    return redirect('/')
