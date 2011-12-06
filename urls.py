@@ -16,12 +16,14 @@ urlpatterns = patterns('',
     (r'^(robots.txt)', 'django.views.static.serve',
         {'document_root' : path.join(settings.ROOT_PATH, 'profiles', 'static')}),
 
+    (r'^accounts/(?P<username>[@\.\w]+)/edit/$',
+     'fd.profiles.views.profile_edit'),
+    (r'^profiles/(?P<username>(?!signout|signup|signin)[@\.\w]+)/$',
+     'userena.views.profile_detail'),
+
     # basic account creation
     (r'^profiles/', include('userena.urls')),
     (r'^accounts/', include('userena.urls')),
-
-    (r'^profiles/(?P<username>(?!signout|signup|signin)[@\.\w]+)/$',
-     'userena.views.profile_detail'),
 
     # Application process
     (r'^attend/save', 'profiles.views.attend_save'),

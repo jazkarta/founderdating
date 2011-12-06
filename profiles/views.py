@@ -1,12 +1,16 @@
+from django import forms
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.http import require_POST
 from profiles.models import (LinkedinProfile, Applicant, EmailTemplate,
                              Event, FdProfile, Interest, Skillset)
+from userena.utils import get_profile_model
+from userena import views as userena_views
 import json
 from django.db.models import Q
 from django.core.paginator import Paginator
+from userena import forms as userena_forms
 import logging
 
 logger = logging.getLogger('fd')
@@ -333,3 +337,47 @@ def smart_redirect(request):
             last = s.split('=')[1]
             return redirect(last)
     return redirect('/')
+
+
+class EditProfileForm(userena_forms.EditProfileForm):
+    first_name = forms.CharField(label=u'First name',
+                                 max_length=30,
+                                 required=False)
+    last_name = forms.CharField(label='Last name',
+                                max_length=30,
+                                required=False)
+    bring_skillsets_json = forms.CharField(label=u'Brings Skillsets',
+                                           widget=forms.Textarea)
+    need_skillsets_json = forms.CharField(label=u'Needs Skillsets',
+                                           widget=forms.Textarea)
+    interests_skillsets_json = forms.CharField(label=u'Interests Skillsets',
+                                               widget=forms.Textarea)
+    past_experience_blurb = forms.CharField(label=u'Past Experience',
+                                            widget=forms.Textarea)
+    bring_blurb = forms.CharField(label=u'Bring to a Founding Team',
+                                  widget=forms.Textarea)
+    building_blurb = forms.CharField(label=u'Currently Building',
+                                     widget=forms.Textarea)
+
+    def __init__(self, *args, **kw):
+        super(userena_forms.EditProfileForm, self).__init__(*args, **kw)
+        new_order = self.fields.keyOrder[:-2]
+        for field in ('last_name', 'first_name'):
+            try:
+                index = new_order.index(field)
+                del new_order[index]
+            except ValueError:
+                pass
+        new_order.insert(0, 'first_name')
+        new_order.insert(1, 'last_name')
+        self.fields.keyOrder = new_order
+
+    class Meta:
+        model = get_profile_model()
+        exclude = userena_forms.EditProfileForm.Meta.exclude + \
+            ['event_status']
+
+
+def profile_edit(request, *args, **kwargs):
+    return userena_views.profile_edit(request, edit_profile_form=EditProfileForm,
+                                      *args, **kwargs)
