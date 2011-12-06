@@ -350,8 +350,8 @@ class EditProfileForm(userena_forms.EditProfileForm):
                                            widget=forms.Textarea)
     need_skillsets_json = forms.CharField(label=u'Needs Skillsets',
                                            widget=forms.Textarea)
-    interests_skillsets_json = forms.CharField(label=u'Interests Skillsets',
-                                               widget=forms.Textarea)
+    interests_json = forms.CharField(label=u'Interests',
+                                     widget=forms.Textarea)
     past_experience_blurb = forms.CharField(label=u'Past Experience',
                                             widget=forms.Textarea)
     bring_blurb = forms.CharField(label=u'Bring to a Founding Team',
