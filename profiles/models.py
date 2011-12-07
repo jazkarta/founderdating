@@ -49,21 +49,35 @@ class FdProfile(UserenaBaseProfile):
         ('technical', 'Tech'),
         ('business', 'Biz')
     )
+    LOOKING_CHOICES = (
+        ('marketing_skills', 'Marketing Skills'),
+    )
 
     user = models.OneToOneField(User,
                                 verbose_name='user',
                                 related_name='fdprofile_user')
     city = models.CharField(max_length=100, null=True, blank=True)
+    availibility = models.CharField(max_length=15,
+                                    choices=START_CHOICES,
+                                    null=True, blank=True,
+                                    default='immediately',)
+    looking_for = models.CharField(max_length=15,
+                                   choices=LOOKING_CHOICES,
+                                   null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True, auto_now=True)
+    education = models.TextField(blank=True, null=True)
+    availability = models.TextField(blank=True, null=True)
     bring_skillsets_json = models.TextField(blank=True, null=True)
     need_skillsets_json = models.TextField(blank=True, null=True)
     interests_json = models.TextField(blank=True, null=True)
     past_experience_blurb = models.TextField(blank=True, null=True)
+    brings = models.TextField(blank=True, null=True)
     bring_blurb = models.TextField(blank=True, null=True)
     building_blurb = models.TextField(blank=True, null=True)
     can_start = models.CharField(max_length=25, choices=START_CHOICES,
                                  blank=True, null=True)
+    current_idea = models.TextField(blank=True, null=True)
     idea_status = models.CharField(max_length=25, choices=IDEA_STATUS_CHOICES,
                                    blank=True, null=True)
     event_status = models.CharField(max_length=25,

@@ -346,18 +346,16 @@ class EditProfileForm(userena_forms.EditProfileForm):
     last_name = forms.CharField(label='Last name',
                                 max_length=30,
                                 required=False)
-    bring_skillsets_json = forms.CharField(label=u'Brings Skillsets',
-                                           widget=forms.Textarea)
-    need_skillsets_json = forms.CharField(label=u'Needs Skillsets',
-                                           widget=forms.Textarea)
-    interests_json = forms.CharField(label=u'Interests',
-                                     widget=forms.Textarea)
-    past_experience_blurb = forms.CharField(label=u'Past Experience',
+    past_experience_blurb = forms.CharField(label=u'Previous Experience',
                                             widget=forms.Textarea)
     bring_blurb = forms.CharField(label=u'Bring to a Founding Team',
                                   widget=forms.Textarea)
     building_blurb = forms.CharField(label=u'Currently Building',
                                      widget=forms.Textarea)
+    brings = forms.CharField(label=u'Bring to a Founding Team',
+                                  widget=forms.Textarea)
+    current_idea = forms.CharField(label=u'Idea you\'re building now',
+                                  widget=forms.Textarea)
 
     def __init__(self, *args, **kw):
         super(userena_forms.EditProfileForm, self).__init__(*args, **kw)
@@ -368,16 +366,47 @@ class EditProfileForm(userena_forms.EditProfileForm):
                 del new_order[index]
             except ValueError:
                 pass
-        new_order.insert(0, 'first_name')
-        new_order.insert(1, 'last_name')
+        new_order = [
+            'first_name',
+            'last_name',
+            'city',
+            #'events_attended',
+            'mugshot',
+            'skillsets',
+            'past_experience_blurb',
+            'education',
+            'looking_for',
+            'interest_areas',
+            'availability',
+            'brings',
+            'idea_status',
+            'founder_type',
+            'current_idea',
+            ]
         self.fields.keyOrder = new_order
+
+        self.fields['mugshot'].label = u'Profile Portrait'
+        self.fields['skillsets'].label = u'Primary Skillsets'
+        self.fields['interest_areas'].label = u'Areas of Interest'
+        self.fields['looking_for'].label = u'Looking for a Partner With'
 
     class Meta:
         model = get_profile_model()
-        exclude = userena_forms.EditProfileForm.Meta.exclude + \
-            ['event_status']
+        exclude = userena_forms.EditProfileForm.Meta.exclude + [
+            'event_status',
+            'bring_skillsets_json',
+            'need_skillsets_json',
+            'interests_json',
+            'bring_blurb',
+            'building_blurb',
+            'can_start',
+            'privacy',
+            'comments',
+            'bio',
+            ]
 
 
 def profile_edit(request, *args, **kwargs):
-    return userena_views.profile_edit(request, edit_profile_form=EditProfileForm,
+    return userena_views.profile_edit(request,
+                                      edit_profile_form=EditProfileForm,
                                       *args, **kwargs)
