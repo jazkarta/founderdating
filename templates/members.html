@@ -20,7 +20,7 @@
       <h1>Filter by</h1>
       <div class="fields">
         <div class="field">
-          <select name="filter.FdProfile.event__id,filter.Applicant.event__id">
+          <select name="filter.FdProfile.applicant__event__id">
             <option disabled>Event</option>
             {% for event in events %}
               <option value="{{event.id}}">{{event.event_location.display}} - {{event.event_date}}</option>
@@ -29,7 +29,7 @@
         </div>
         <div class="field">
           <select name="filter.FdProfile.city__icontains">
-            <option>City</option>
+            <option disabled>City</option>
             {% for city in cities %}
               <option value="{{city}}">{{city}}</option>
             {% endfor %}
