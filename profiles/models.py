@@ -49,9 +49,6 @@ class FdProfile(UserenaBaseProfile):
         ('technical', 'Tech'),
         ('business', 'Biz')
     )
-    LOOKING_CHOICES = (
-        ('marketing_skills', 'Marketing Skills'),
-    )
 
     user = models.OneToOneField(User,
                                 verbose_name='user',
@@ -62,7 +59,6 @@ class FdProfile(UserenaBaseProfile):
                                     null=True, blank=True,
                                     default='immediately',)
     looking_for = models.CharField(max_length=15,
-                                   choices=LOOKING_CHOICES,
                                    null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True, auto_now=True)

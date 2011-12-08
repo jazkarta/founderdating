@@ -92,7 +92,7 @@ def attend(request):
 def attend_save(request):
     context_instance = RequestContext(request)
     user = context_instance['user']
-    fdprofile = FdProfile.objects.get(user_id=user.id)
+    fdprofile = FdProfile.objects.get(user=user)
 
     e = Event.objects.filter(pk=request.POST.get("event_id", -1))
     if len(e) < 1:
@@ -339,6 +339,27 @@ def smart_redirect(request):
     return redirect('/')
 
 
+class EventWidget(forms.Widget):
+
+    @property
+    def events(self):
+        events = []
+        for app in Applicant.objects.filter(fdprofile=self.fdprofile):
+            events.append(app.event)
+        return events
+
+    def render(self, name, value, attrs=None):
+        events = self.events
+        if len(events) == 0:
+            return u'<span class="no-events">No registered events</span>'
+        s = u'<ul>'
+        for event in events:
+            s += u'<li>' + unicode(event.event_date) + u', ' \
+                + event.event_location.display + u'</li>\n'
+        s += u'</ul>'
+        return s
+
+
 class EditProfileForm(userena_forms.EditProfileForm):
     first_name = forms.CharField(label=u'First name',
                                  max_length=30,
@@ -356,6 +377,11 @@ class EditProfileForm(userena_forms.EditProfileForm):
                                   widget=forms.Textarea)
     current_idea = forms.CharField(label=u'Idea you\'re building now',
                                   widget=forms.Textarea)
+    looking_for = forms.ChoiceField(label=u'Looking for a Partner With',
+                                    widget=forms.SelectMultiple)
+    events_attended = forms.ChoiceField(
+        label=u'Events Attended',
+        widget=EventWidget(attrs={'readonly': 'readonly'}))
 
     def __init__(self, *args, **kw):
         super(userena_forms.EditProfileForm, self).__init__(*args, **kw)
@@ -370,7 +396,7 @@ class EditProfileForm(userena_forms.EditProfileForm):
             'first_name',
             'last_name',
             'city',
-            #'events_attended',
+            'events_attended',
             'mugshot',
             'skillsets',
             'past_experience_blurb',
@@ -388,7 +414,9 @@ class EditProfileForm(userena_forms.EditProfileForm):
         self.fields['mugshot'].label = u'Profile Portrait'
         self.fields['skillsets'].label = u'Primary Skillsets'
         self.fields['interest_areas'].label = u'Areas of Interest'
-        self.fields['looking_for'].label = u'Looking for a Partner With'
+        self.fields['looking_for'].choices = [(x.id, x.name)
+                                              for x in Skillset.objects.all()]
+        self.fields['events_attended'].widget.fdprofile = kw['instance']
 
     class Meta:
         model = get_profile_model()
