@@ -340,17 +340,17 @@ def smart_redirect(request):
     return redirect('/')
 
 
+def get_events(fdprofile):
+    events = []
+    for app in Applicant.objects.filter(fdprofile=fdprofile):
+        events.append(app.event)
+    return events
+
+
 class EventWidget(forms.Widget):
 
-    @property
-    def events(self):
-        events = []
-        for app in Applicant.objects.filter(fdprofile=self.fdprofile):
-            events.append(app.event)
-        return events
-
     def render(self, name, value, attrs=None):
-        events = self.events
+        events = get_events(self.fdprofile)
         if len(events) == 0:
             return u'<span class="no-events">No registered events</span>'
         s = u'<ul>'
@@ -369,19 +369,26 @@ class EditProfileForm(userena_forms.EditProfileForm):
                                 max_length=30,
                                 required=False)
     past_experience_blurb = forms.CharField(label=u'Previous Experience',
-                                            widget=forms.Textarea)
+                                            widget=forms.Textarea,
+                                            required=False)
     bring_blurb = forms.CharField(label=u'Bring to a Founding Team',
-                                  widget=forms.Textarea)
+                                  widget=forms.Textarea,
+                                  required=False)
     building_blurb = forms.CharField(label=u'Currently Building',
-                                     widget=forms.Textarea)
+                                     widget=forms.Textarea,
+                                     required=False)
     brings = forms.CharField(label=u'Bring to a Founding Team',
-                                  widget=forms.Textarea)
+                                  widget=forms.Textarea,
+                             required=False)
     current_idea = forms.CharField(label=u'Idea you\'re building now',
-                                  widget=forms.Textarea)
+                                  widget=forms.Textarea,
+                                   required=False)
     looking_for = forms.ChoiceField(label=u'Looking for a Partner With',
-                                    widget=forms.SelectMultiple)
+                                    widget=forms.SelectMultiple,
+                                    required=False)
     events_attended = forms.ChoiceField(
         label=u'Events Attended',
+        required=False,
         widget=EventWidget(attrs={'readonly': 'readonly'}))
 
     def __init__(self, *args, **kw):
@@ -450,4 +457,8 @@ def profile_detail(request, username, *args, **kwargs):
         profile = FdProfile(user=user)
         profile.save()
 
-    return userena_views.profile_detail(request, username, *args, **kwargs)
+    context = {'events': get_events(profile)}
+
+    return userena_views.profile_detail(request, username,
+                                        extra_context=context,
+                                        *args, **kwargs)

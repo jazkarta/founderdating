@@ -838,3 +838,60 @@ form fieldset input[type=text], input[type=password]{
 .member-info a:hover {
     background-color: #eee;
 }
+
+#details {
+    padding: 15px;
+    -webkit-border-radius: 5px;
+    background: #efefef;
+    border-top: solid 1px #D9D9D9;
+}
+
+#details .col1 {
+    float: left;
+    padding-right: 1em;
+}
+
+#details .header {
+    border-bottom: solid 1px #d9d9d9;
+    padding: 1em 1em 2em 1em;
+}
+
+#details .name {
+    font-family: times, Times New Roman, times-roman, georgia, serif;
+    font-size: 2em;
+    color: #111;
+    margin: 0;
+}
+
+#details .email {
+    font-size: 0.8em;
+    color: gray;
+    margin: 0;
+}
+
+#details dt {
+    font-size: 0.8em;
+    color: gray;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0.5em 0;
+}
+
+#details .list1 {
+    float: left;
+    width: 40%;
+}
+
+#details .list2 {
+    float: right;
+    width: 40%;
+}
+
+#details dd {
+    font-size: .75em;
+    color: #464646;
+    margin: 10px;
+}
+
+#details dd.event {
+}
