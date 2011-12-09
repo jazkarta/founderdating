@@ -1,6 +1,7 @@
 from django import forms
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.views.decorators.http import require_POST
 from profiles.models import (LinkedinProfile, Applicant, EmailTemplate,
@@ -438,3 +439,15 @@ def profile_edit(request, *args, **kwargs):
     return userena_views.profile_edit(request,
                                       edit_profile_form=EditProfileForm,
                                       *args, **kwargs)
+
+
+def profile_detail(request, username, *args, **kwargs):
+    user = get_object_or_404(User,
+                             username__iexact=username)
+    try:
+        profile = user.get_profile()
+    except Exception:
+        profile = FdProfile(user=user)
+        profile.save()
+
+    return userena_views.profile_detail(request, username, *args, **kwargs)

@@ -19,7 +19,9 @@ urlpatterns = patterns('',
     (r'^accounts/(?P<username>[@\.\w]+)/edit/$',
      'fd.profiles.views.profile_edit'),
     (r'^profiles/(?P<username>(?!signout|signup|signin)[@\.\w]+)/$',
-     'userena.views.profile_detail'),
+     'fd.profiles.views.profile_detail'),
+    (r'^accounts/(?P<username>(?!signout|signup|signin)[@\.\w]+)/$',
+     'fd.profiles.views.profile_detail'),
 
     # basic account creation
     (r'^profiles/', include('userena.urls')),
